@@ -1,24 +1,25 @@
 const Discord = require(`discord.js`);
-const prefix = require('../../cfg.json').prefix
 const mongoose = require('mongoose');
-const prefixSchema = require('../../models/prefix');
+const WelcomeSchema = require('../../models/welcome');
 const { MessageButton, MessageActionRow } = require("discord.js");
 
-
 module.exports = {
-    name: "resetprefix",
-    category: "Beállítások",
+    name: "resetwelcome",
+    aliases: ["reset-welcome", "rw"],
+    categories: "Beállítások",
+    permissions: "Csatornák kezelése",
+    description: "Az üdvözlő csatornát törli ki.",
+    cooldown: "",
     usage: "",
-    description: "Kitörölöheted a beállított prefixet!",
-    aliases: [""],
     run: async(bot, message, args) => {
-        if (!message.member.permissions.has("MANAGE_MESSAGES"))
-        return message.channel.send({content: "Nincs jogod ezt a parancsot használni!"})
+        if (!message.member.permissions.has("MANAGE_CHANNELS")) 
+        return message.reply({content: "Nincs jogod ezt a parancsot használni!"})
+
 
         let ellenorzes = new Discord.MessageEmbed()
         .setTitle(`Ellenőrzés`)
         .setColor("#000080")
-        .setDescription(`Biztos, hogy törölni szeretnét a prefixet?`)
+        .setDescription(`Biztos, hogy ki akarod törölni az üdvözlő csatornát?`)
         .setFooter(bot.user.username, bot.user.displayAvatarURL())
         .setTimestamp();
   
@@ -49,23 +50,23 @@ module.exports = {
           
                   .setTitle(`Sikeres beállítás!`)
                   .setColor('#00FF00')
-                  .setDescription(`A prefix újra bot alap prefixe! Prefix: \n**${prefix}**`)
+                  .setDescription(`Az üdvözlő csatorna sikeresen törölve lett!`)
                   .setFooter(bot.user.username, bot.user.displayAvatarURL())
                   .setTimestamp();
                   await i.update({ embeds: [embed] });
-                  await prefixSchema.findOneAndDelete({ Guild : message.guild.id })
+                  await WelcomeSchema.findOneAndDelete({ Guild : message.guild.id })
                 }
               if (i.customId === 'danger') {
   
                 let embed = new Discord.MessageEmbed()
                 .setTitle(`Sikertelen beállítás!`)
                 .setColor("#FF0000")
-                .setDescription('A prefix törlés sikertelen volt!' )
+                .setDescription('Az üdvözlő csatorna nem lett törölve!')
                 .setFooter(bot.user.username, bot.user.displayAvatarURL())
                 .setTimestamp();
   
                 await i.update({ embeds: [embed] });
               }
-              });
+    });
     }
 }

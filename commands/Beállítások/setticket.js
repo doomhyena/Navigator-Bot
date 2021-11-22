@@ -1,24 +1,31 @@
 const Discord = require(`discord.js`);
-const prefix = require('../../cfg.json').prefix
-const mongoose = require('mongoose');
-const prefixSchema = require('../../models/prefix');
+const Schema = require('../../models/ticket');
 const { MessageButton, MessageActionRow } = require("discord.js");
 
-
 module.exports = {
-    name: "resetprefix",
-    category: "Beállítások",
+    name: "setticket",
+    aliases: ["st"],
+    categories: "Beállítások",
+    permissions: "Csatornák kezelése",
+    description: "",
+    cooldown: "",
     usage: "",
-    description: "Kitörölöheted a beállított prefixet!",
-    aliases: [""],
     run: async(bot, message, args) => {
-        if (!message.member.permissions.has("MANAGE_MESSAGES"))
-        return message.channel.send({content: "Nincs jogod ezt a parancsot használni!"})
+        if (!message.member.permissions.has("MANAGE_CHANNELS"))
+        return message.channel.send({content: 'Ehhez a parancshoz nincs jogod!'})
+
+        const ca = args[0]
+        if (!ca)
+        return message.channel.send({content: "Érvénytelen kategória ID, kérlek adj meg egy érvényes kategória ID!!"});
+
+        if (isNaN(ca))
+        return message.channel.send({content: "Kérlek a kategória ID-jét add meg és ne mást!"})
+
 
         let ellenorzes = new Discord.MessageEmbed()
         .setTitle(`Ellenőrzés`)
         .setColor("#000080")
-        .setDescription(`Biztos, hogy törölni szeretnét a prefixet?`)
+        .setDescription(`Biztos vagy benne, hogy ezt a kategóriát akarod beállítani? **${ca}**`)
         .setFooter(bot.user.username, bot.user.displayAvatarURL())
         .setTimestamp();
   
@@ -49,18 +56,29 @@ module.exports = {
           
                   .setTitle(`Sikeres beállítás!`)
                   .setColor('#00FF00')
-                  .setDescription(`A prefix újra bot alap prefixe! Prefix: \n**${prefix}**`)
+                  .setDescription(`A hibajegy kategóriája sikeresen beállítva ide: **${ca}**`)
                   .setFooter(bot.user.username, bot.user.displayAvatarURL())
                   .setTimestamp();
                   await i.update({ embeds: [embed] });
-                  await prefixSchema.findOneAndDelete({ Guild : message.guild.id })
+  
+                  Schema.findOne({ Guild: message.guild.id }, async (err, data) => {
+                    if (data) {
+                      data.Category = ca;
+                      data.save();
+                    } else {
+                      new Schema ({
+                        Guild: message.guild.id,
+                        Category: ca,
+                      }).save();
+                    }
+                  })
                 }
               if (i.customId === 'danger') {
   
                 let embed = new Discord.MessageEmbed()
                 .setTitle(`Sikertelen beállítás!`)
                 .setColor("#FF0000")
-                .setDescription('A prefix törlés sikertelen volt!' )
+                .setDescription('Végül nem állítottad be egyik kategóriát sem a hibajegynek!' )
                 .setFooter(bot.user.username, bot.user.displayAvatarURL())
                 .setTimestamp();
   

@@ -1,24 +1,24 @@
 const Discord = require(`discord.js`);
-const prefix = require('../../cfg.json').prefix
-const mongoose = require('mongoose');
-const prefixSchema = require('../../models/prefix');
+const TicketSchema = require('../../models/ticket');
 const { MessageButton, MessageActionRow } = require("discord.js");
 
-
 module.exports = {
-    name: "resetprefix",
-    category: "Beállítások",
+    name: "setticket",
+    aliases: ["st"],
+    categories: "Beállítások",
+    permissions: "Csatornák kezelése",
+    description: "",
+    cooldown: "",
     usage: "",
-    description: "Kitörölöheted a beállított prefixet!",
-    aliases: [""],
     run: async(bot, message, args) => {
-        if (!message.member.permissions.has("MANAGE_MESSAGES"))
-        return message.channel.send({content: "Nincs jogod ezt a parancsot használni!"})
+        if (!message.member.permissions.has("MANAGE_CHANNELS")) 
+        return message.reply({content: "Nincs jogod ezt a parancsot használni!"})
+
 
         let ellenorzes = new Discord.MessageEmbed()
         .setTitle(`Ellenőrzés`)
         .setColor("#000080")
-        .setDescription(`Biztos, hogy törölni szeretnét a prefixet?`)
+        .setDescription(`Biztos, hogy ki akarod törölni az üdvözlő csatornát?`)
         .setFooter(bot.user.username, bot.user.displayAvatarURL())
         .setTimestamp();
   
@@ -49,23 +49,23 @@ module.exports = {
           
                   .setTitle(`Sikeres beállítás!`)
                   .setColor('#00FF00')
-                  .setDescription(`A prefix újra bot alap prefixe! Prefix: \n**${prefix}**`)
+                  .setDescription(`A ticket kategória sikeresen törölve lett!`)
                   .setFooter(bot.user.username, bot.user.displayAvatarURL())
                   .setTimestamp();
                   await i.update({ embeds: [embed] });
-                  await prefixSchema.findOneAndDelete({ Guild : message.guild.id })
+                  await TicketSchema.findOneAndDelete({ Guild : message.guild.id })
                 }
               if (i.customId === 'danger') {
   
                 let embed = new Discord.MessageEmbed()
                 .setTitle(`Sikertelen beállítás!`)
                 .setColor("#FF0000")
-                .setDescription('A prefix törlés sikertelen volt!' )
+                .setDescription('A ticket kategória nem lett törölve!')
                 .setFooter(bot.user.username, bot.user.displayAvatarURL())
                 .setTimestamp();
   
                 await i.update({ embeds: [embed] });
               }
-              });
+    });
     }
 }

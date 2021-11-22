@@ -1,28 +1,28 @@
 const Discord = require(`discord.js`);
-const Schema = require('../../models/welcome');
+const Schema = require('../../models/autorole');
 const { MessageButton, MessageActionRow } = require("discord.js");
 
 module.exports = {
-    name: "setwelcome",
-    aliases: ["set-welcome"],
+    name: "autorole",
+    aliases: ["auto-role", "setautorole", "set-autorole", "set-auto-role"],
     categories: "Beállítások",
-    permissions: "Csatornák kezelése",
-    description: "Be tudod állítani, az üdvözlő csatornát ezzel a paranccsal.",
+    permissions: "Rangok kezelése",
+    description: "Be tudod állítani, hogy mikor belép egy felhasználó milyen rangot adjon neki automatikusan.",
     cooldown: "",
-    usage: "<#csatorna>",
+    usage: "<@rang>",
     run: async(bot, message, args) => {
       
-      if (!message.member.permissions.has("MANAGE_CHANNELS"))
+      if (!message.member.permissions.has("MANAGE_ROLES"))
       return message.channel.send({content: 'Ehhez a parancshoz nincs jogod!'})
 
-      const ch = message.mentions.channels.first();
-      if (!ch)
-      return message.channel.send({content: "Érvénytelen csatorna, kérlek adj meg egy érvényes csatornát!!"});
+      const r = message.mentions.roles.first();
+      if (!r)
+      return message.channel.send({content: "Érvénytelen rang, kérlek adj meg egy érvényes rangot!!"});
 
       let ellenorzes = new Discord.MessageEmbed()
       .setTitle(`Ellenőrzés`)
       .setColor("#000080")
-      .setDescription(`Biztos vagy benne, hogy ezt a csatornát akarod beállítani? **${ch}**`)
+      .setDescription(`Biztos vagy benne, hogy ezt a rangot akarod beállítani? **${r}**`)
       .setFooter(bot.user.username, bot.user.displayAvatarURL())
       .setTimestamp();
 
@@ -53,19 +53,19 @@ module.exports = {
         
                 .setTitle(`Sikeres beállítás!`)
                 .setColor('#00FF00')
-                .setDescription(`Az üdvözlő csatorna sikeresen beállítva ide: ${ch}`)
+                .setDescription(`A rang  sikeresen beállítva: ${r}! Mától minden új tangak ezt a rangot fogom odaadni!`)
                 .setFooter(bot.user.username, bot.user.displayAvatarURL())
                 .setTimestamp();
                 await i.update({ embeds: [embed] });
 
                 Schema.findOne({ Guild: message.guild.id }, async (err, data) => {
                   if (data) {
-                    data.Channel = ch.id;
+                    data.Role = r.id;
                     data.save();
                   } else {
                     new Schema ({
                       Guild: message.guild.id,
-                      Channel: ch.id,
+                      Role: r.id,
                     }).save();
                   }
                 })
@@ -75,7 +75,7 @@ module.exports = {
               let embed = new Discord.MessageEmbed()
               .setTitle(`Sikertelen beállítás!`)
               .setColor("#FF0000")
-              .setDescription('Végül nem állítottál be semmilyen üdvözlő csatornát!' )
+              .setDescription('Végül nem állítottál be semmilyen rangot!' )
               .setFooter(bot.user.username, bot.user.displayAvatarURL())
               .setTimestamp();
 

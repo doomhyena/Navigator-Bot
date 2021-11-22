@@ -1,24 +1,25 @@
 const Discord = require(`discord.js`);
-const prefix = require('../../cfg.json').prefix
 const mongoose = require('mongoose');
-const prefixSchema = require('../../models/prefix');
+const AutoRoleSchema = require('../../models/autorole');
 const { MessageButton, MessageActionRow } = require("discord.js");
 
 
 module.exports = {
-    name: "resetprefix",
-    category: "Beállítások",
-    usage: "",
-    description: "Kitörölöheted a beállított prefixet!",
-    aliases: [""],
+    name: "resetautorole",
+    aliases: ["reset-auto-role", "reset-autorole", "rar"],
+    categories: "Beállítások",
+    permissions: "Rangok kezelése",
+    description: "Az automatikus rangadást kapcsolja ki.",
+    cooldown: "",
+    usage: "<@rang>",
     run: async(bot, message, args) => {
-        if (!message.member.permissions.has("MANAGE_MESSAGES"))
-        return message.channel.send({content: "Nincs jogod ezt a parancsot használni!"})
+        if(!message.member.permissions.has("MANAGE_ROLES")) 
+        return message.reply({content: "Nincs jogod ezt a parancsot használni!"})
 
         let ellenorzes = new Discord.MessageEmbed()
         .setTitle(`Ellenőrzés`)
         .setColor("#000080")
-        .setDescription(`Biztos, hogy törölni szeretnét a prefixet?`)
+        .setDescription(`Biztos, hogy ki akarod kapcsolni az autorole funkciót?`)
         .setFooter(bot.user.username, bot.user.displayAvatarURL())
         .setTimestamp();
   
@@ -49,18 +50,18 @@ module.exports = {
           
                   .setTitle(`Sikeres beállítás!`)
                   .setColor('#00FF00')
-                  .setDescription(`A prefix újra bot alap prefixe! Prefix: \n**${prefix}**`)
+                  .setDescription(`Az autorole funkció sikeresen kikapcsolva!`)
                   .setFooter(bot.user.username, bot.user.displayAvatarURL())
                   .setTimestamp();
                   await i.update({ embeds: [embed] });
-                  await prefixSchema.findOneAndDelete({ Guild : message.guild.id })
+                  await AutoRoleSchema.findOneAndDelete({ Guild : message.guild.id })
                 }
               if (i.customId === 'danger') {
   
                 let embed = new Discord.MessageEmbed()
                 .setTitle(`Sikertelen beállítás!`)
                 .setColor("#FF0000")
-                .setDescription('A prefix törlés sikertelen volt!' )
+                .setDescription('Az autorole funkció nem lett kikapcsolva!' )
                 .setFooter(bot.user.username, bot.user.displayAvatarURL())
                 .setTimestamp();
   

@@ -4,11 +4,16 @@ const prefixSchema = require('../../models/prefix');
 
 module.exports = {
     name: "setprefix",
-    category: "Beállítások",
-    usage: "<prefix>",
-    description: "Ezzel a parancsal tudod beállítani a prefixedet",
     aliases: ["sp"],
+    categories: "Beállítások",
+    permissions: "Rangok kezelése",
+    description: "Ezzel a parancsal tudod beállítani a prefixedet",
+    cooldown: "",
+    usage: "<prefix>",
     run: async(bot, message, args) => {
+        if (!message.member.permissions.has("MANAGE_MESSAGES"))
+        return message.channel.send({content: "Nincs jogod ezt a parancsot  használni!"})
+
         const res = await args.join(" ")
         if(!res) return message.channel.send({content: 'Add meg a prefixet amire meg szeretnéd változtatni!'})
         prefixSchema.findOne({ Guild : message.guild.id }, async(err, data) => {

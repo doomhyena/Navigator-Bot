@@ -1,9 +1,9 @@
 const Discord = require(`discord.js`);
-const Schema = require('../../models/welcome');
+const Schema = require('../../models/poll');
 const { MessageButton, MessageActionRow } = require("discord.js");
 
 module.exports = {
-    name: "setwelcome",
+    name: "setpoll",
     aliases: ["set-welcome"],
     categories: "Beállítások",
     permissions: "Csatornák kezelése",
@@ -17,7 +17,7 @@ module.exports = {
 
       const ch = message.mentions.channels.first();
       if (!ch)
-      return message.channel.send({content: "Érvénytelen csatorna, kérlek adj meg egy érvényes csatornát!!"});
+      return message.channel.send({content: "Érvénytelen csatorna, kérlek adj meg egy érvényes kategóriát!!"});
 
       let ellenorzes = new Discord.MessageEmbed()
       .setTitle(`Ellenőrzés`)
@@ -53,7 +53,7 @@ module.exports = {
         
                 .setTitle(`Sikeres beállítás!`)
                 .setColor('#00FF00')
-                .setDescription(`Az üdvözlő csatorna sikeresen beállítva ide: ${ch}`)
+                .setDescription(`A szavazó csatorna csatorna sikeresen beállítva ide: ${ch}`)
                 .setFooter(bot.user.username, bot.user.displayAvatarURL())
                 .setTimestamp();
                 await i.update({ embeds: [embed] });
@@ -75,7 +75,7 @@ module.exports = {
               let embed = new Discord.MessageEmbed()
               .setTitle(`Sikertelen beállítás!`)
               .setColor("#FF0000")
-              .setDescription('Végül nem állítottál be semmilyen üdvözlő csatornát!' )
+              .setDescription('Végül nem állítottál be semmilyen szavazó csatornát!' )
               .setFooter(bot.user.username, bot.user.displayAvatarURL())
               .setTimestamp();
 
