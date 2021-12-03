@@ -16,7 +16,7 @@ module.exports = {
         let embed = new Discord.MessageEmbed()
         .setTitle(`Pénz:`)
         .setColor(`RANDOM`)
-        .addField(`Pénztárca`, `${bal}`)
+        .addField(`Pénztárcád`, `${bal}`)
         .setFooter(bot.user.username, bot.user.displayAvatarURL())
         .setTimestamp();
         

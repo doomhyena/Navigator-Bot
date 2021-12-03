@@ -2,14 +2,16 @@ const Discord = require(`discord.js`);
 
 module.exports = {
     name: "szerverlista",
-    category: "Bot",
+    aliases: ["xsd"],
+    categories: "Tulajdonosi",
+    permissions: "",
     description: "Kiírja a szervereket",
+    cooldown: "",
     usage: "",
+    ownerOnly: true,
     run: async(bot, message, args) => {
-        if(message.author.id !== "864583234158460938")  return message.channel.send({content: 'Nem te vagy a tulajdonos -_-'})
         bot.guilds.cache.forEach((guild) => {
-            message.channel.send ({content: `\n**${guild.name}**\n |Tagok: ${guild.memberCount}\n |Tulajdonos: ${guild.owner}`})
-
+            message.channel.send({content: `\n**Szervernév:** ${guild.name}\n **Tagszám:** ${guild.memberCount}\n **Tulajdonos:** ${guild.owner}`})
         })
     }
 }

@@ -4,7 +4,7 @@ const items = require('../../bruh/shopitem')
 
 module.exports = {
     name: "shop",
-    aliases: ["rmv"],
+    aliases: ["bolt"],
     categories: "Pénz rendszer",
     permissions: "",
     description: "Ez itt a bolt.",
