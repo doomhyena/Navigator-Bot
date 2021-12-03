@@ -10,7 +10,7 @@ module.exports = {
     cooldown: "",
     usage: "<Felhasználó ID> <indok>",
     run: async (bot, message, args) => {
-        if (!message.member.hasPermission('BAN_MEMBERS')) return message.channel.send({content: 'Nincs hozzá a megfelelő jogod!'}).then(m => m.delete({ timeout: 5000 }));
+        if (!message.member.permissions.has('BAN_MEMBERS')) return message.channel.send({content: 'Nincs hozzá a megfelelő jogod!'}).then(m => m.delete({ timeout: 5000 }));
 
         if (!args[0]) return message.channel.send({content: 'Légyszives add meg, hogy kinek a kitiltását akarod feloldani!'}).then(m => m.delete({ timeout: 5000 }));
     

@@ -11,7 +11,7 @@ module.exports = {
     run: async (bot, message, args) => {
       message.delete();
 
-      if(!message.member.hasPermission(`BAN_MEMBERS`)) return message.reply(`Nincsen elegendő jogosultságod a parancs használatához!`);
+      if(!message.member.permissions.has(`BAN_MEMBERS`)) return message.reply({content: `Ehhez nincs jogod!`});
 
       let banMember = message.mentions.members.first();
       let banreason = args.slice(1).join(" ");

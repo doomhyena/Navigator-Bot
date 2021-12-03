@@ -10,7 +10,7 @@ module.exports = {
     usage: "",
     run: async (bot, message, args) => {
         if (!message.member.permissions.has("MANAGE_MESSAGES"))
-            return message.channel.send({content: `Nincs jogod ezt a parancsot használni, ${message.author.username}`});
+            return message.channel.send({content: `Nincs jogod ezt a parancsot használni, ${message.author.username}!`});
 
         if (!args[0]) {
             return message.channel.send({content: `Adj meg 1 számot 1-től 100-ig`})

@@ -19,9 +19,9 @@ module.exports = {
         let cpuLol;
         cpuStat.usagePercent(async function (err, percent, seconds) {
      let botinfo = new Discord.MessageEmbed()
-     .setTitle("__**Xitus Statisztikája:**__")
+     .setTitle(`__**${bot.user.username} Statisztikája:**__`)
      .setColor("RED")
-     .addField("🤖Bot Név:", `${bot.user.username}`)
+     .addField("🤖Bot Név:", `${bot.user.tag}`)
      .addField("🤖Bot Prefixe:", `${prefix}`)
      .addField("**💻 Tulajdonos/Fejlesztő:**", `FLUK3#3172`)
      .addField("**⏳ Ram Használat:**", `${(process.memoryUsage().heapUsed / 1024 / 1024).toFixed(2)} / ${(os.totalmem() / 1024 / 1024).toFixed(2)} MB`, true)

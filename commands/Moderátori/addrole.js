@@ -9,7 +9,7 @@ module.exports = {
     cooldown: "",
     usage: "<@felhasználó>, <@rang>",
     run: async(bot, message, args) => {
-        if(!message.member.hasPermission('MANAGE_ROLES')) return message.reply({content: 'Nincs jogod ehhez!'});
+        if(!message.member.permissions.has('MANAGE_ROLES')) return message.reply({content: 'Nincs jogod ehhez!'});
 
         const target = message.mentions.members.first();
         if(!target) return message.channel.send({ content: 'Nem jelölted meg a felhasználót!' });

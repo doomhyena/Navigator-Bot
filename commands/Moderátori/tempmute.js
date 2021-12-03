@@ -10,7 +10,7 @@ module.exports = {
     cooldown: "",
     usage: "<@felhasználó> <idő> <rang ID>",
     run: async(bot, message, args) => {
-        if(!message.member.hasPermission(["MANAGE_ROLES", "MANAGE_MESSAGES"])) return message.reply({content: "Nincs megfelelő jogsultságod a használatához!"})
+        if(!message.member.permissions.has(["MANAGE_ROLES", "MANAGE_MESSAGES"])) return message.reply({content: "Nincs megfelelő jogsultságod a használatához!"})
         const Member = message.mentions.members.first() || message.guild.members.cache.get(args[0])
         const time = args[1]
         if(!Member) return message.channel.send({content: ':x: Hiba! Nem említettél meg egyetlen egy felhasználót sem!'})

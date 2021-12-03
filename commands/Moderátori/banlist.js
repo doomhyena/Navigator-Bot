@@ -9,7 +9,7 @@ module.exports = {
     cooldown: "",
     usage: "",
     run: async(bot, message, args) => {
-        if(!message.member.hasPermission(`BAN_MEMBERS`)) return message.reply({content: "Nincs jogod ehhez!"})
+        if(!message.member.permissions.has(`BAN_MEMBERS`)) return message.reply({content: "Nincs jogod ehhez!"})
 
         const fetchbans = message.guild.fetchBans();
         const banuser =  (await fetchbans)

@@ -1,29 +1,35 @@
 const Discord = require(`discord.js`);
+const PollSchema = require('../../models/poll');
 
 module.exports = {
     name: "poll",
-    aliases: [""],
+    aliases: ["szavazas"],
     categories: "Moderátori",
     permissions: "Üzenetek kezelése",
     description: "Szavazást tudsz indítani",
     cooldown: "",
-    usage: "<Ide azt írod amit meg akarsz szavaztatni>",
+    usage: "<szöveg>",
     run: async(bot, message, args) => {
-        if (!message.member.permissions.has("MANAGE_MESSAGES")) return message.channel.send({content: `Nincs jogod ezt a parancsot használni!`});
+        PollSchema.findOne({ Guild: message.guild.id }, async (e, data) => {
+            if (!data) return;
+        if(!message.member.permissions.has("MANAGE_MESSAGES")) return message.reply({content:"Ehhez nincs jogod!"})
 
-        let msgxd = message.content.split(' ').slice(1).join(' ')
-        let channel = "884025935899271211"
-        let pollembed = new Discord.MessageEmbed()
+        const alma = args.join(" ");
+        if(!alma) return message.reply({content: "Nem mondtad meg, hogy ,iről indítsak szavazást!"})
+        const ch = message.guild.channels.cache.get(data.Channel);
 
-        .setTitle("Szavazás")
-        .setAuthor(message.author.tag)
-        .setDescription(`${msgxd}`)
+        let embed = new Discord.MessageEmbed()
+        .setTitle(`**Szavazás**`)
+        .setColor("#00FF00")
+        .addField(`${message.author.tag} szavazást indított!`, `${alma}`)
         .setFooter(bot.user.username, bot.user.displayAvatarURL())
         .setTimestamp();
 
-        const mittomen = channel.send({embeds: [pollembed]})
-                ;(await mittomen).react("✅")
-                ;(await mittomen).react("❌")
-        channel.send({content: '@everyone'})
+        ch.send({content: "@everyone"})
+        ch.send({ embeds: [embed] }).then(async msg => {
+            await msg.react('✔️')
+            await msg.react('❌')
+            });
+        })
     }
 }

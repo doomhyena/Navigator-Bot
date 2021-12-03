@@ -9,7 +9,7 @@ module.exports = {
     cooldown: "",
     usage: "<#csatorna> <rang ID>",
     run: async(bot, message, args) => {
-        if(!message.member.hasPermission("MANAGE_CHANNELS")) return message.reply({content: "Nincs megfelelő jogsultságod a használatához!"})
+        if(!message.member.permissions.has("MANAGE_CHANNELS")) return message.reply({content: "Nincs megfelelő jogsultságod a használatához!"})
         const channel = message.mentions.channels.first()
         if(!channel) return message.reply({content: "Helytelen használat! Használat: =unlock <#csatorna>  <rang ID>."})
         const roletofind = args.slice(1).join(" ")

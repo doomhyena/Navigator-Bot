@@ -10,7 +10,7 @@ module.exports = {
     cooldown: "",
     usage: "<parancsnév> <parancs>",
     run: async(bot, message, args) => {
-        if(!message.member.hasPermission('ADMINISTRATOR')) return message.channel.send({content: 'Nincsen jogod ehhez a parancshoz!'});
+        if(!message.member.permissions.has('ADMINISTRATOR')) return message.channel.send({content: 'Nincsen jogod ehhez a parancshoz!'});
 
         const name = args[0]; const response = args.slice(1).join(" ");
 

@@ -1,10 +1,6 @@
 const Discord = require("discord.js");
-module.exports = {
-    name: "kick",
-    category: "moderator",
-    description: "Kick parancs.",
-    usage: "<@Felhasználó>",
 
+module.exports = {
     name: "kick",
     aliases: [""],
     categories: "Moderátori",
@@ -15,7 +11,7 @@ module.exports = {
     run: async (bot, message, args) => {
         let prefix = "="
 
-            if(!message.member.hasPermission("KICK_MEMBERS")) return message.reply("Ehhez nincs jogod!")
+            if(!message.member.permissions.has("KICK_MEMBERS")) return message.reply({content:"Ehhez nincs jogod!"})
             let kick_user = message.mentions.members.first();
             if(args[0] && kick_user){
     

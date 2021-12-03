@@ -9,8 +9,8 @@ module.exports = {
     cooldown: "",
     usage:"<rangnév>",
     run: async (bot, message, args) => {
-        if(message.guild.member(bot.user).hasPermissions(`ADMINISTRATOR`)){
-            if(message.member.hasPermission(`MANAGE_ROLES`)){
+        if(message.guild.member(bot.user).permissions.has(`ADMINISTRATOR`)){
+            if(message.member.permissions.has(`MANAGE_ROLES`)){
                 if(args[0]){
                     message.guild.roles.create({
                         "name": args[0],

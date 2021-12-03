@@ -9,7 +9,7 @@ module.exports = {
     cooldown: "",
     usage: "<csatorna neve>",
     run: async (bot, message, args) => {
-        if(!message.member.hasPermission('MANAGE_CHANNELS')) return message.channel.send({content: `Nincs megfelelő jogod hozzá!`}).then(m => m.delete ({ timeout: 7000 })); 
+        if(!message.member.permissions.has('MANAGE_CHANNELS')) return message.channel.send({content: `Nincs megfelelő jogod hozzá!`}).then(m => m.delete ({ timeout: 7000 })); 
 
         if(!args[0]) return message.channel.send({content: 'Hiba ``Használd: =createtext <Csatorna Neve>``'}).then(m => m.delete ({ timeout: 7000 }));
     
