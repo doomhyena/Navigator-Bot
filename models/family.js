@@ -2,7 +2,8 @@ const mongoose = require('mongoose')
 
 let Schema = new mongoose.Schema({
     Guild: String,
-    Category: String,
+    ID: String,
+    Love: String,
 })
 
-module.exports = mongoose.model('ticket', Schema)
+module.exports = mongoose.model('family', Schema)
