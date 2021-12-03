@@ -31,7 +31,7 @@ module.exports = {
             ]
             let embed = new Discord.MessageEmbed()
             .setColor("BLACK")
-            .setTitle("Szerencsejáték - Gambling")
+            .setTitle("Funfact")
             .setDescription(valaszto[Math.floor(Math.random() * valaszto.length)])
             .setFooter("A WonderNetwork Viccek")
             message.channel.send({embeds: [embed]})

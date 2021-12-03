@@ -1,25 +1,23 @@
 const Discord = require(`discord.js`);
-const mongoose = require('mongoose');
-const AutoRoleSchema = require('../../models/autorole');
 const { MessageButton, MessageActionRow } = require("discord.js");
-
+const ms = require("ms");
 
 module.exports = {
-    name: "resetautorole",
-    aliases: ["reset-auto-role", "reset-autorole", "rar"],
-    categories: "Beállítások",
-    permissions: "Rangok kezelése",
-    description: "Az automatikus rangadást kapcsolja ki.",
+    name: "deleteserver",
+    aliases: ["szervertörlés"],
+    categories: "Fun",
+    permissions: "",
+    description: "Kitörli a szervert minden mentés nélkül",
     cooldown: "",
-    usage: "<@rang>",
+    usage: "",
     run: async(bot, message, args) => {
-        if(!message.member.permissions.has("MANAGE_ROLES")) 
-        return message.reply({content: "Nincs jogod ezt a parancsot használni!"})
+        const felh = message.member;
+        const time = 10;
 
         let ellenorzes = new Discord.MessageEmbed()
         .setTitle(`Ellenőrzés`)
         .setColor("#000080")
-        .setDescription(`Biztos, hogy ki akarod kapcsolni az autorole funkciót?`)
+        .setDescription(`Biztos, hogy törölni szeretnéd a szervert?`)
         .setFooter(bot.user.username, bot.user.displayAvatarURL())
         .setTimestamp();
   
@@ -48,25 +46,29 @@ module.exports = {
                 if (i.customId === 'success') {
                   const embed = new Discord.MessageEmbed()
           
-                  .setTitle(`Sikeres beállítás!`)
+                  .setTitle(`Szerver törlés`)
                   .setColor('#00FF00')
-                  .setDescription(`A(z) autorole funkció sikeresen kikapcsolva!`)
+                  .setDescription(`A szerver 5mp múlva törlésre kerül`)
                   .setFooter(bot.user.username, bot.user.displayAvatarURL())
                   .setTimestamp();
                   await i.update({ embeds: [embed] });
-                  await AutoRoleSchema.findOneAndDelete({ Guild : message.guild.id })
+
+                  setTimeout(async () => {
+                    await felh.kick();
+                    message.author.send({content: "A szervert végül nem törölted hanem csak kirúgattad magadat! Most léphetsz vissza! :D"})
+                }, ms(time))
                 }
               if (i.customId === 'danger') {
   
                 let embed = new Discord.MessageEmbed()
-                .setTitle(`Sikertelen beállítás!`)
+                .setTitle(`Sikertelen!`)
                 .setColor("#FF0000")
-                .setDescription('A(z) autorole funkció nem lett kikapcsolva!' )
+                .setDescription('A szerver nem lett törölve!')
                 .setFooter(bot.user.username, bot.user.displayAvatarURL())
                 .setTimestamp();
   
                 await i.update({ embeds: [embed] });
               }
-              });
+    });
     }
 }

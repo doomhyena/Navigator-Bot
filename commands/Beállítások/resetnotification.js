@@ -1,25 +1,25 @@
 const Discord = require(`discord.js`);
 const mongoose = require('mongoose');
-const AutoRoleSchema = require('../../models/autorole');
+const Schema = require('../../models/notification');
 const { MessageButton, MessageActionRow } = require("discord.js");
 
-
 module.exports = {
-    name: "resetautorole",
-    aliases: ["reset-auto-role", "reset-autorole", "rar"],
+    name: "resetpoll",
+    aliases: ["reset-poll", "rp"],
     categories: "Beállítások",
-    permissions: "Rangok kezelése",
-    description: "Az automatikus rangadást kapcsolja ki.",
+    permissions: "Csatornák kezelése",
+    description: "Az üdvözlő csatornát törli ki.",
     cooldown: "",
-    usage: "<@rang>",
+    usage: "",
     run: async(bot, message, args) => {
-        if(!message.member.permissions.has("MANAGE_ROLES")) 
+        if (!message.member.permissions.has("MANAGE_CHANNELS")) 
         return message.reply({content: "Nincs jogod ezt a parancsot használni!"})
+
 
         let ellenorzes = new Discord.MessageEmbed()
         .setTitle(`Ellenőrzés`)
         .setColor("#000080")
-        .setDescription(`Biztos, hogy ki akarod kapcsolni az autorole funkciót?`)
+        .setDescription(`Biztos, hogy ki akarod törölni a szavazó csatornát?`)
         .setFooter(bot.user.username, bot.user.displayAvatarURL())
         .setTimestamp();
   
@@ -50,23 +50,23 @@ module.exports = {
           
                   .setTitle(`Sikeres beállítás!`)
                   .setColor('#00FF00')
-                  .setDescription(`A(z) autorole funkció sikeresen kikapcsolva!`)
+                  .setDescription(`A(z) bejelentő csatorna sikeresen törölve lett!`)
                   .setFooter(bot.user.username, bot.user.displayAvatarURL())
                   .setTimestamp();
                   await i.update({ embeds: [embed] });
-                  await AutoRoleSchema.findOneAndDelete({ Guild : message.guild.id })
+                  await Schema.findOneAndDelete({ Guild : message.guild.id })
                 }
               if (i.customId === 'danger') {
   
                 let embed = new Discord.MessageEmbed()
                 .setTitle(`Sikertelen beállítás!`)
                 .setColor("#FF0000")
-                .setDescription('A(z) autorole funkció nem lett kikapcsolva!' )
+                .setDescription('A(z) bejelentő csatorna nem lett törölve!')
                 .setFooter(bot.user.username, bot.user.displayAvatarURL())
                 .setTimestamp();
   
                 await i.update({ embeds: [embed] });
               }
-              });
+    });
     }
 }

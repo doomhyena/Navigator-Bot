@@ -1,28 +1,24 @@
 const Discord = require(`discord.js`);
-const Schema = require('../../models/leave');
+const Schema = require('../../models/antispam');
 const { MessageButton, MessageActionRow } = require("discord.js");
 
 module.exports = {
-    name: "setleave",
-    aliases: ["set-leave"],
+    name: "setantispam",
+    aliases: ["set-antispam","set-anti-spam","sas"],
     categories: "Beállítások",
-    permissions: "Csatornák kezelése",
-    description: "Be tudod állítani, az távozó csatornát ezzel a paranccsal.",
+    permissions: "Üzentetek kezelése",
+    description: "Ezzel a paranccsal meg tudod állítani a raid-eket",
     cooldown: "",
-    usage: "<#csatorna>",
+    usage: "",
     run: async(bot, message, args) => {
       
-      if (!message.member.permissions.has("MANAGE_CHANNELS"))
+      if (!message.member.permissions.has("MANAGE_MESSAGES"))
       return message.channel.send({content: 'Ehhez a parancshoz nincs jogod!'})
-
-      const ch = message.mentions.channels.first();
-      if (!ch)
-      return message.channel.send({content: "Érvénytelen csatorna, kérlek adj meg egy csatornát!!"});
 
       let ellenorzes = new Discord.MessageEmbed()
       .setTitle(`Ellenőrzés`)
       .setColor("#000080")
-      .setDescription(`Biztos vagy benne, hogy ezt a csatornát akarod beállítani? **${ch}**`)
+      .setDescription(`Biztos vagy benne, hogy be akarod állítani az **antispam**et? Így  az üzenetküldési sebbeség korlátozva lesz!`)
       .setFooter(bot.user.username, bot.user.displayAvatarURL())
       .setTimestamp();
 
@@ -53,19 +49,18 @@ module.exports = {
         
                 .setTitle(`Sikeres beállítás!`)
                 .setColor('#00FF00')
-                .setDescription(`A(z) távozó csatorna sikeresen beállítva ide: ${ch}`)
+                .setDescription(`A(z) **antispam** sikeresen bekapcsolva!`)
                 .setFooter(bot.user.username, bot.user.displayAvatarURL())
                 .setTimestamp();
                 await i.update({ embeds: [embed] });
 
                 Schema.findOne({ Guild: message.guild.id }, async (err, data) => {
                   if (data) {
-                    data.Channel = ch.id;
+                    data.Guild = message.guild.id;
                     data.save();
                   } else {
                     new Schema ({
                       Guild: message.guild.id,
-                      Channel: ch.id,
                     }).save();
                   }
                 })
@@ -75,7 +70,7 @@ module.exports = {
               let embed = new Discord.MessageEmbed()
               .setTitle(`Sikertelen beállítás!`)
               .setColor("#FF0000")
-              .setDescription('Végül nem állítottál be semmilyen távozó csatornát!' )
+              .setDescription('Végül nem állítottad be a(z) **antispam**-et!')
               .setFooter(bot.user.username, bot.user.displayAvatarURL())
               .setTimestamp();
 

@@ -50,7 +50,7 @@ module.exports = {
           
                   .setTitle(`Sikeres beállítás!`)
                   .setColor('#00FF00')
-                  .setDescription(`Az üdvözlő csatorna sikeresen törölve lett!`)
+                  .setDescription(`A(z) üdvözlő csatorna sikeresen törölve lett!`)
                   .setFooter(bot.user.username, bot.user.displayAvatarURL())
                   .setTimestamp();
                   await i.update({ embeds: [embed] });
@@ -61,7 +61,7 @@ module.exports = {
                 let embed = new Discord.MessageEmbed()
                 .setTitle(`Sikertelen beállítás!`)
                 .setColor("#FF0000")
-                .setDescription('Az üdvözlő csatorna nem lett törölve!')
+                .setDescription('A(z) üdvözlő csatorna nem lett törölve!')
                 .setFooter(bot.user.username, bot.user.displayAvatarURL())
                 .setTimestamp();
   

@@ -53,7 +53,7 @@ module.exports = {
         
                 .setTitle(`Sikeres beállítás!`)
                 .setColor('#00FF00')
-                .setDescription(`A rang  sikeresen beállítva: ${r}! Mától minden új tangak ezt a rangot fogom odaadni!`)
+                .setDescription(`A(z) rang  sikeresen beállítva: ${r}! Mától minden új tangak ezt a rangot fogom odaadni!`)
                 .setFooter(bot.user.username, bot.user.displayAvatarURL())
                 .setTimestamp();
                 await i.update({ embeds: [embed] });

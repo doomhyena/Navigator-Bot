@@ -21,17 +21,7 @@ module.exports = {
 
         let nicks = nicknamesXD[Math.floor(Math.random() * nicknamesXD.length)]
 
-        if (message.member.roles.highest.rawPosition >= message.guild.me.roles.highest.rawPosition) {
-            message.reply({content: `Nem tudtalak átnevezni erre: **"${nicks}"**, ugyanis nincs jogom hozzá, Bocsi.`})
-            return
-        } 
-        if (message.author.id === message.guild.ownerId) {
-            message.channel.send({ content: `Nem tudtalak átnevezni erre: **${nicks}**, ugyanis te vagy a szerver tulajdonosa.`})
-            return
-        }
-        else {
             message.member.setNickname(nicks)
             message.reply({content: `Nézd meg a becenevedet.`})
-        }
     }
 }

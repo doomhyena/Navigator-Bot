@@ -13,7 +13,7 @@ module.exports = {
     run: async(bot, message, args) => {
         const text1 = args[0];
         const text2 = args[1];
-if(!text1) {
+      if(!text1) {
             const text1 = new MessageEmbed()
             .setTitle(`❌ ERROR`)
             .setDescription(`Nem adtál semmilyen választási lehetőséget!`)

@@ -1,13 +1,13 @@
 const Discord = require(`discord.js`);
-const Schema = require('../../models/leave');
+const Schema = require('../../models/notification');
 const { MessageButton, MessageActionRow } = require("discord.js");
 
 module.exports = {
-    name: "setleave",
-    aliases: ["set-leave"],
+    name: "setnotification",
+    aliases: ["set-notification", "sn"],
     categories: "Beállítások",
     permissions: "Csatornák kezelése",
-    description: "Be tudod állítani, az távozó csatornát ezzel a paranccsal.",
+    description: "Be tudod állítani, a bejelentés csatornát ezzel a paranccsal.",
     cooldown: "",
     usage: "<#csatorna>",
     run: async(bot, message, args) => {
@@ -17,7 +17,7 @@ module.exports = {
 
       const ch = message.mentions.channels.first();
       if (!ch)
-      return message.channel.send({content: "Érvénytelen csatorna, kérlek adj meg egy csatornát!!"});
+      return message.channel.send({content: "Érvénytelen csatorna, kérlek adj meg egy érvényes csatornát!!"});
 
       let ellenorzes = new Discord.MessageEmbed()
       .setTitle(`Ellenőrzés`)
@@ -53,7 +53,7 @@ module.exports = {
         
                 .setTitle(`Sikeres beállítás!`)
                 .setColor('#00FF00')
-                .setDescription(`A(z) távozó csatorna sikeresen beállítva ide: ${ch}`)
+                .setDescription(`A(z) bejelentő csatorna csatorna sikeresen beállítva ide: ${ch}`)
                 .setFooter(bot.user.username, bot.user.displayAvatarURL())
                 .setTimestamp();
                 await i.update({ embeds: [embed] });
@@ -75,7 +75,7 @@ module.exports = {
               let embed = new Discord.MessageEmbed()
               .setTitle(`Sikertelen beállítás!`)
               .setColor("#FF0000")
-              .setDescription('Végül nem állítottál be semmilyen távozó csatornát!' )
+              .setDescription('Végül nem állítottál be semmilyen bejelentő csatornát!' )
               .setFooter(bot.user.username, bot.user.displayAvatarURL())
               .setTimestamp();
 

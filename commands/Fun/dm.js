@@ -16,14 +16,14 @@ module.exports = {
       if (!user)
         return message.channel.send(
             {content: 
-          `**:x: | Mem említett felhasználót, vagy érvénytelen azonosítót adott meg**`
+          `**:x: | Mem említettél felhasználót, vagy érvénytelen azonosítót adtál meg meg**`
             }
         );
       if (!args.slice(1).join(" "))
-        return message.channel.send({content: `:x: | You did not specify your message**`});
+        return message.channel.send({content: `:x: | Nem adtad meg az üzenetet!**`});
       user.user
         .send(args.slice(1).join(" "))
-        .catch(() => message.channel.send({content: `**:x: | That user could not be Dmed!**`}))
-        .then(() => message.channel.send({content: `**:x: | Sent a message to ${user.user.tag}**`}));
+        .catch(() => message.channel.send({content: `**:x: | A felhasználó nem fogad privát üzeneteket!**`}))
+        .then(() => message.channel.send({content: `**:x: | Az üzenet elküldve következő emberkének: ${user.user.tag}**`}));
     }
 }

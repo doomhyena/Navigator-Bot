@@ -53,7 +53,7 @@ module.exports = {
         
                 .setTitle(`Sikeres beállítás!`)
                 .setColor('#00FF00')
-                .setDescription(`Az üdvözlő csatorna sikeresen beállítva ide: ${ch}`)
+                .setDescription(`A(z) üdvözlő csatorna sikeresen beállítva ide: ${ch}`)
                 .setFooter(bot.user.username, bot.user.displayAvatarURL())
                 .setTimestamp();
                 await i.update({ embeds: [embed] });

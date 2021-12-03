@@ -4,10 +4,10 @@ const { MessageButton, MessageActionRow } = require("discord.js");
 
 module.exports = {
     name: "setpoll",
-    aliases: ["set-welcome"],
+    aliases: ["set-poll", "sp"],
     categories: "Beállítások",
     permissions: "Csatornák kezelése",
-    description: "Be tudod állítani, az üdvözlő csatornát ezzel a paranccsal.",
+    description: "Be tudod állítani, a szavazó csatornát ezzel a paranccsal.",
     cooldown: "",
     usage: "<#csatorna>",
     run: async(bot, message, args) => {
@@ -17,7 +17,7 @@ module.exports = {
 
       const ch = message.mentions.channels.first();
       if (!ch)
-      return message.channel.send({content: "Érvénytelen csatorna, kérlek adj meg egy érvényes kategóriát!!"});
+      return message.channel.send({content: "Érvénytelen csatorna, kérlek adj meg egy érvényes csatornát!!"});
 
       let ellenorzes = new Discord.MessageEmbed()
       .setTitle(`Ellenőrzés`)
@@ -53,7 +53,7 @@ module.exports = {
         
                 .setTitle(`Sikeres beállítás!`)
                 .setColor('#00FF00')
-                .setDescription(`A szavazó csatorna csatorna sikeresen beállítva ide: ${ch}`)
+                .setDescription(`A(z) szavazó csatorna csatorna sikeresen beállítva ide: ${ch}`)
                 .setFooter(bot.user.username, bot.user.displayAvatarURL())
                 .setTimestamp();
                 await i.update({ embeds: [embed] });

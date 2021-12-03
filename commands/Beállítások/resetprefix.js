@@ -49,7 +49,7 @@ module.exports = {
           
                   .setTitle(`Sikeres beállítás!`)
                   .setColor('#00FF00')
-                  .setDescription(`A prefix újra bot alap prefixe! Prefix: \n**${prefix}**`)
+                  .setDescription(`A(z) prefix újra bot alap prefixe! Prefix: \n**${prefix}**`)
                   .setFooter(bot.user.username, bot.user.displayAvatarURL())
                   .setTimestamp();
                   await i.update({ embeds: [embed] });
@@ -60,7 +60,7 @@ module.exports = {
                 let embed = new Discord.MessageEmbed()
                 .setTitle(`Sikertelen beállítás!`)
                 .setColor("#FF0000")
-                .setDescription('A prefix törlés sikertelen volt!' )
+                .setDescription('A(z) prefix törlés sikertelen volt!' )
                 .setFooter(bot.user.username, bot.user.displayAvatarURL())
                 .setTimestamp();
   

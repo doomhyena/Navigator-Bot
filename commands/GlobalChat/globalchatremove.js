@@ -1,24 +1,24 @@
 const Discord = require(`discord.js`);
 const mongoose = require('mongoose');
-const LeaveSchema = require('../../models/leave');
+const Schema = require('../../models/globalchat');
 const { MessageButton, MessageActionRow } = require("discord.js");
 
 module.exports = {
-    name: "resetleave",
-    aliases: ["reset-leave", "sl"],
+    name: "globalchatremove",
+    aliases: ["global-chat-remove", "removeglobalchat", "rmvgc", "gcrmv"],
     categories: "Beállítások",
-    permissions: "Csatornák kezelése",
-    description: "A távozó csatornát törli ki.",
+    permissions: "Adminisztrátori",
+    description: "A GlobalChat-et törli ki.",
     cooldown: "",
     usage: "",
     run: async(bot, message, args) => {
-        if (!message.member.permissions.has("MANAGE_CHANNELS")) 
+        if (!message.member.permissions.has("ADMINISTRATOR")) 
         return message.reply({content: "Nincs jogod ezt a parancsot használni!"})
  
             let ellenorzes = new Discord.MessageEmbed()
             .setTitle(`Ellenőrzés`)
             .setColor("#000080")
-            .setDescription(`Biztos, hogy ki akarod törölni a távozó csatornát?`)
+            .setDescription(`Biztos, hogy ki kapcsolod az **Globalchat** funkciót?`)
             .setFooter(bot.user.username, bot.user.displayAvatarURL())
             .setTimestamp();
       
@@ -49,18 +49,18 @@ module.exports = {
               
                       .setTitle(`Sikeres beállítás!`)
                       .setColor('#00FF00')
-                      .setDescription(`A(z) távozó csatorna sikeresen törölve lett!`)
+                      .setDescription(`A(z) **Globalchat** funkció sikeresen ki lett kapcsolva!`)
                       .setFooter(bot.user.username, bot.user.displayAvatarURL())
                       .setTimestamp();
                       await i.update({ embeds: [embed] });
-                      await LeaveSchema.findOneAndDelete({ Guild : message.guild.id })
+                      await Schema.findOneAndDelete({ Guild : message.guild.id })
                     }
                   if (i.customId === 'danger') {
       
                     let embed = new Discord.MessageEmbed()
                     .setTitle(`Sikertelen beállítás!`)
                     .setColor("#FF0000")
-                    .setDescription('A(z) távozó csatorna nem lett törölve!')
+                    .setDescription('A(z) **Globalchat** funkció nem lett kikapcsolva!')
                     .setFooter(bot.user.username, bot.user.displayAvatarURL())
                     .setTimestamp();
       

@@ -3,12 +3,6 @@ const mcapi = require('mcapi')
 
 module.exports = {
     name: "mcskin",
-    category: "Általános",
-    description: "Lekérheted a Minecraft skin-et",
-    usage: "<felhasználónév>",
-    aliases: [""],
-
-    name: "mcskin",
     aliases: ["minecraft-skin"],
     categories: "Fun",
     permissions: "",
