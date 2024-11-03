@@ -61,7 +61,7 @@ module.exports = async (bot) => {
 
 //MongoDB csatlakozás  -----------------------------------------
 
-mongoose.connect('mongodb+srv://Navigator:Navigator123@navigator.pctld.mongodb.net/test', {
+mongoose.connect('', {
         useUnifiedTopology: true,
         useNewUrlParser: true,
 }).then(console.log('Sikeresen csatlakoztam az adatbázishoz azaz a MongoDB-hez!'))
